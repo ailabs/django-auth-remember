@@ -9,6 +9,12 @@ AUTHENTICATION_BACKENDS = (
 ) 
 
 
+Add the remember-me middleware to MIDDLEWARE_CLASSES 
+(right after AuthenticationMiddleware!!):
+
+    'auth_remember.middleware.RememberMeMiddleware'
+
+
 Set the expire time of the session to browser close (optional):
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
