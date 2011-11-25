@@ -1,10 +1,10 @@
 from django.contrib import auth
 from django.forms.forms import NON_FIELD_ERRORS
 from django.forms.util import ErrorList
-from django.template.response import TemplateResponse
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from auth_remember.auth import remember_user
-from auth_remember.forms import LoginForm
+from example_project.auth_example.forms import LoginForm
 
 
 def login(request):
