@@ -28,5 +28,14 @@ This module uses the session var 'REMEMBER_ME_FRESH' to indicate if the user
 session is fresh.
 
 
-TODO: Module adds the private attribute _remember_me on the request to pass
-vars to the middleware. There might be a better place for this ??
+TODOs
+-----
+
+- Module adds the private attribute _remember_me on the request to pass vars
+  to the middleware. There might be a better place for this ??
+
+- Persist remember cookies with ``expires`` and ``max-age``, the latter
+  is not supported by IE 6, 7 and 8.
+
+- Introduce settings for REMEMBER_COOKIE_NAME, REMEMBER_COOKIE_DOMAIN and
+  REMEMBER_COOKIE_MAX_AGE
