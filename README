@@ -1,0 +1,26 @@
+Django remember me app
+----------------------
+
+Add the remember-me authentication backend to django:
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'auth_remember.backend.RememberBackend',
+) 
+
+
+Set the expire time of the session to browser close (optional):
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+To remember a user add the following code to your authentication handler::
+
+    from auth_remember.auth import set_remember_me
+    remember_user(request, user)
+
+This module uses the session var 'REMEMBER_ME_FRESH' to indicate if the user
+session is fresh.
+
+
+TODO: Module adds the private attribute _remember_me on the request to pass
+vars to the middleware. There might be a better place for this ??
