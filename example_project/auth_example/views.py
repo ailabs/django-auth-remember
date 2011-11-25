@@ -1,8 +1,7 @@
 from django.contrib import auth
-from django.forms.forms import NON_FIELD_ERRORS
-from django.forms.util import ErrorList
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext_lazy as _
 from auth_remember.auth import remember_user
 from example_project.auth_example.forms import LoginForm
 
@@ -21,9 +20,8 @@ def login(request):
                 if data['remember_me']:
                     remember_user(request, user)
             else:
-                error_list = form.errors.setdefault(
-                    NON_FIELD_ERRORS, ErrorList())
-                error_list.append("Invalid username/password")
+                form.add_non_field_error(_("Invalid username/password"))
+
     else:
         form = LoginForm()
 
