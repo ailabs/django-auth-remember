@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
 
-from auth_remember import auth
+from auth_remember import utils
 from auth_remember import settings
 from auth_remember.models import RememberToken
 
@@ -12,10 +12,9 @@ class RememberBackend(object):
     remember-me cookie token
 
     """
-    def authenticate(self, remember_token, request):
+    def authenticate(self, token_string, request):
         """Return the user associated with the given token."""
-        token = RememberToken.objects.get_by_string(
-            token_string=remember_token)
+        token = RememberToken.objects.get_by_string(token_string)
         if not token:
             return
 
@@ -28,8 +27,8 @@ class RememberBackend(object):
         user = token.user
 
         # Create new token cookie value and delete current token
-        token_string = auth.create_token_string(user, token)
-        auth.preset_cookie(request, token_string)
+        token_string = utils.create_token_string(user, token)
+        utils.preset_cookie(request, token_string)
         token.delete()
 
         return user

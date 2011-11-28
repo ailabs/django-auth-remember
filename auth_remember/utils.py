@@ -3,26 +3,11 @@ import uuid
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.contrib import auth as django_auth
 from django.utils.http import cookie_date
 
 from auth_remember.auth_utils import make_password
 from auth_remember.models import RememberToken
 from auth_remember.settings import COOKIE_AGE, COOKIE_NAME
-
-
-def login(request):
-    """Authenticate the user via the remember token if available in the
-    request cookies.
-
-    """
-    token = request.COOKIES.get(COOKIE_NAME, None)
-    if not token:
-        return
-    user = django_auth.authenticate(remember_token=token, request=request)
-    if user:
-        user._remember_me_user = True
-        django_auth.login(request, user)
 
 
 def create_token_string(user, token=None):
@@ -71,3 +56,4 @@ def set_cookie(response, token):
 
 def delete_cookie(response):
     response.delete_cookie(COOKIE_NAME)
+

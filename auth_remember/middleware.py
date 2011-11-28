@@ -1,23 +1,35 @@
+from django.contrib import auth as django_auth
 from django.contrib.auth import signals
 from django.dispatch import receiver
 
-from auth_remember import auth
+from auth_remember import utils
+from auth_remember.settings import COOKIE_NAME
 
 
 class RememberMeMiddleware(object):
     def process_request(self, request):
-        if not request.user.is_authenticated():
-            auth.login(request)
-        request.user.is_fresh = request.session.get('REMEMBER_ME_FRESH', False)
+        if request.user.is_authenticated():
+            request.user.is_fresh = request.session.get('REMEMBER_ME_FRESH', False)
+            return
+
+        request.user.is_fresh = False
+
+        token = request.COOKIES.get(COOKIE_NAME, None)
+        if not token:
+            return
+        user = django_auth.authenticate(token_string=token, request=request)
+        if user:
+            user._remember_me_user = True
+            django_auth.login(request, user)
 
     def process_response(self, request, response):
         remember_me_token = getattr(request, '_remember_me_token', None)
 
         if remember_me_token is not None:
             if remember_me_token:
-                auth.set_cookie(response, remember_me_token)
+                utils.set_cookie(response, remember_me_token)
             else:
-                auth.delete_cookie(response)
+                utils.delete_cookie(response)
         return response
 
 
@@ -32,4 +44,4 @@ def set_user_is_fresh(sender, **kwargs):
 
 @receiver(signals.user_logged_out)
 def remove_remember_me(sender, **kwargs):
-    auth.preset_cookie(kwargs['request'], '')
+    utils.preset_cookie(kwargs['request'], '')
