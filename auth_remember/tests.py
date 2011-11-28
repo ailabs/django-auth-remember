@@ -85,11 +85,11 @@ class AuthTest(TestCase):
         self.assertTrue(user.is_fresh)
 
         auth.logout(request)
-        middleware.RememberMeMiddleware().process_response(request, response)
+        middleware.AuthRememberMiddleware().process_response(request, response)
         self.assertEqual(response.cookies[COOKIE_NAME].value, '')
 
     def test_middleware_set_freshness(self):
-        from auth_remember.middleware import RememberMeMiddleware
+        from auth_remember.middleware import AuthRememberMiddleware
 
         request = self.factory.get('/')
         request.user = self.user
@@ -97,12 +97,12 @@ class AuthTest(TestCase):
         SessionMiddleware().process_request(request)
         request.session['REMEMBER_ME_FRESH'] = True
 
-        RememberMeMiddleware().process_request(request)
+        AuthRememberMiddleware().process_request(request)
         self.assertEqual(request.user, self.user)
         self.assertTrue(request.user.is_fresh)
 
     def test_middleware_update_token(self):
-        from auth_remember.middleware import RememberMeMiddleware
+        from auth_remember.middleware import AuthRememberMiddleware
         from auth_remember.models import RememberToken
         from auth_remember.settings import COOKIE_NAME
         from auth_remember.utils import create_token_string
@@ -114,7 +114,7 @@ class AuthTest(TestCase):
         request.COOKIES[COOKIE_NAME] = value
 
         SessionMiddleware().process_request(request)
-        RememberMeMiddleware().process_request(request)
+        AuthRememberMiddleware().process_request(request)
         self.assertEqual(request.user, self.user)
 
         # Remember me token should be deleted
@@ -122,7 +122,7 @@ class AuthTest(TestCase):
 
         # Create response
         response = HttpResponse("Test response")
-        RememberMeMiddleware().process_response(request, response)
+        AuthRememberMiddleware().process_response(request, response)
 
         # The remember-me token should be changed
         token_string = response.cookies[COOKIE_NAME].value
@@ -132,13 +132,13 @@ class AuthTest(TestCase):
     def test_middleware_set_remember_token(self):
         from auth_remember import remember_user
         from auth_remember import settings
-        from auth_remember.middleware import RememberMeMiddleware
+        from auth_remember.middleware import AuthRememberMiddleware
 
         request = self.factory.get('/')
         response = HttpResponse("Test response")
 
         # Do nothing (no cookies should be set)
-        middleware = RememberMeMiddleware()
+        middleware = AuthRememberMiddleware()
         middleware.process_response(request, response)
         self.assertFalse(response.cookies)
 
