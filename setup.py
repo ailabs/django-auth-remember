@@ -45,7 +45,7 @@ class RunTests(Command):
 
 
 setup(
-    name='auth_remember',
+    name='django-auth-remember',
     version='0.1',
     url='',
     license='MIT',
