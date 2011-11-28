@@ -7,18 +7,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-
+        
         # Adding model 'RememberToken'
         db.create_table('auth_remember_remembertoken', (
             ('token', self.gf('django.db.models.fields.CharField')(max_length=32, primary_key=True)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('serie_token', self.gf('django.db.models.fields.CharField')(max_length=32)),
+            ('serie_created', self.gf('django.db.models.fields.DateTimeField')()),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='remember_me_tokens', to=orm['auth.User'])),
         ))
         db.send_create_signal('auth_remember', ['RememberToken'])
 
 
     def backwards(self, orm):
-
+        
         # Deleting model 'RememberToken'
         db.delete_table('auth_remember_remembertoken')
 
@@ -56,6 +58,8 @@ class Migration(SchemaMigration):
         'auth_remember.remembertoken': {
             'Meta': {'object_name': 'RememberToken'},
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'serie_created': ('django.db.models.fields.DateTimeField', [], {}),
+            'serie_token': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'token': ('django.db.models.fields.CharField', [], {'max_length': '32', 'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'remember_me_tokens'", 'to': "orm['auth.User']"})
         },

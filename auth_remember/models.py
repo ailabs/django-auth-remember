@@ -10,4 +10,8 @@ class RememberToken(models.Model):
     created = models.DateTimeField(editable=False, blank=True,
         default=datetime.datetime.now)
 
+    serie_token = models.CharField(max_length=32, blank=False)
+
+    serie_created = models.DateTimeField(editable=False, blank=False)
+
     user = models.ForeignKey(User, related_name="remember_me_tokens")

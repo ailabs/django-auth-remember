@@ -18,9 +18,9 @@ def login(request):
     token = request.COOKIES.get(COOKIE_NAME, None)
     if not token:
         return
-    user = django_auth.authenticate(remember_token=token)
+    user = django_auth.authenticate(remember_token=token, request=request)
     if user:
-        user._remember_user = True
+        user._remember_me_user = True
         django_auth.login(request, user)
 
 
@@ -31,9 +31,41 @@ def remember_user(request, user):
     This token is set as a cookie value by the middleware.
 
     """
-    token = uuid.uuid4().hex
-    RememberToken(token=token, user=user).save()
-    request._remember_me = {'token': token}
+    token = create_token_object(user, None)
+    preset_cookie(request, token)
+
+
+def create_token_object(user, token=None):
+    """Create a new token object for the given `user` and optionally based
+    upon the given `token`.
+
+    If the optional token is given then a new token is created for the
+    same serie.
+
+    """
+    if token:
+        serie_created = token.serie_created
+        serie_token = token.serie_token
+    else:
+        serie_created = datetime.now()
+        serie_token = uuid.uuid4().hex
+
+    token = RememberToken(
+        token=uuid.uuid4().hex,
+        serie_created=serie_created,
+        serie_token=serie_token,
+        user=user
+    )
+    token.save()
+    return token
+
+
+def preset_cookie(request, token):
+    if token:
+        request._remember_me_token = '%s:%s:%s' % (
+            token.serie_token, token.user.id, token.token)
+    else:
+        request._remember_me_token = ''
 
 
 def set_cookie(response, token):
@@ -53,4 +85,3 @@ def set_cookie(response, token):
 
 def delete_cookie(response):
     response.delete_cookie(COOKIE_NAME)
-
