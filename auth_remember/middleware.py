@@ -37,7 +37,6 @@ class RememberMeMiddleware(object):
 def set_user_is_fresh(sender, **kwargs):
     request = kwargs['request']
     user = kwargs['user']
-
     user.is_fresh = not getattr(user, '_remember_me_user', False)
     request.session['REMEMBER_ME_FRESH'] = user.is_fresh
 

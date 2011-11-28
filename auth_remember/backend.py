@@ -31,6 +31,7 @@ class RememberBackend(object):
         utils.preset_cookie(request, token_string)
         token.delete()
 
+        user._remember_me_user = True
         return user
 
     def get_user(self, user_id):

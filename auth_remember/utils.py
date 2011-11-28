@@ -19,9 +19,15 @@ def create_token_string(user, token=None):
     token_hash = make_password('sha1', token_value)
     token = RememberToken(
         token_hash=token_hash,
-        created_initial=token.created_initial if token else datetime.now(),
+        created_initial=token.created_initial if token else None,
         user=user
     )
+
+    # This is to make sure that created_initial == created incase there is no
+    # token
+    if token.created_initial is None:
+        token.created_initial = token.created
+
     token.save()
     return '%d:%s' % (user.id, token_value)
 
