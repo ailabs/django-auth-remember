@@ -1,9 +1,6 @@
-from datetime import datetime, timedelta
-
 from django.contrib.auth.models import User
 
 from auth_remember import utils
-from auth_remember import settings
 from auth_remember.models import RememberToken
 
 
@@ -17,13 +14,6 @@ class AuthRememberBackend(object):
         token = RememberToken.objects.get_by_string(token_string)
         if not token:
             return
-
-        # If the token is older then COOKIE_AGE then delete it and return
-        max_age = datetime.now() - timedelta(seconds=settings.COOKIE_AGE)
-        if token.created_initial < max_age:
-            token.delete()
-            return
-
         user = token.user
 
         # Create new token cookie value and delete current token
