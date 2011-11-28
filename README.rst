@@ -18,7 +18,14 @@ AuthenticationMiddleware::
         ...
     )
 
-Set the expire time of the session to browser close (optional):
+
+Set the cookie name and expire time (optional)::
+
+    AUTH_REMEMBER_COOKIE_NAME = 'remember_token'
+    AUTH_REMEMBER_COOKIE_AGE = 86400 * 28  # 4 weeks by default
+
+
+Set the expire time of the session to browser close (optional)::
 
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -43,4 +50,4 @@ See:
 TODOs
 -----
 
-- Introduce settings for REMEMBER_COOKIE_DOMAIN 
+- Introduce settings for AUTH_REMEMBER_COOKIE_DOMAIN 
