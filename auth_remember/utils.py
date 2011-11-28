@@ -40,9 +40,9 @@ def preset_cookie(request, token_string):
 
     """
     if token_string:
-        request._remember_me_token = token_string
+        request._auth_remember_token = token_string
     else:
-        request._remember_me_token = ''
+        request._auth_remember_token = ''
 
 
 def set_cookie(response, token):
@@ -62,4 +62,3 @@ def set_cookie(response, token):
 
 def delete_cookie(response):
     response.delete_cookie(COOKIE_NAME)
-

@@ -19,15 +19,15 @@ class AuthRememberMiddleware(object):
             return
         user = django_auth.authenticate(token_string=token, request=request)
         if user:
-            user._remember_me_user = True
+            user._auth_remember_user = True
             django_auth.login(request, user)
 
     def process_response(self, request, response):
-        remember_me_token = getattr(request, '_remember_me_token', None)
+        auth_remember_token = getattr(request, '_auth_remember_token', None)
 
-        if remember_me_token is not None:
-            if remember_me_token:
-                utils.set_cookie(response, remember_me_token)
+        if auth_remember_token is not None:
+            if auth_remember_token:
+                utils.set_cookie(response, auth_remember_token)
             else:
                 utils.delete_cookie(response)
         return response
@@ -37,10 +37,10 @@ class AuthRememberMiddleware(object):
 def set_user_is_fresh(sender, **kwargs):
     request = kwargs['request']
     user = kwargs['user']
-    user.is_fresh = not getattr(user, '_remember_me_user', False)
+    user.is_fresh = not getattr(user, '_auth_remember_user', False)
     request.session[SESSION_KEY] = user.is_fresh
 
 
 @receiver(signals.user_logged_out)
-def remove_remember_me(sender, **kwargs):
+def remove_auth_remember(sender, **kwargs):
     utils.preset_cookie(kwargs['request'], '')
