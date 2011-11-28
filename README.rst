@@ -18,6 +18,7 @@ AuthenticationMiddleware::
         ...
     )
 
+Add auth_remember to INSTALLED_APPS
 
 Set the cookie name and expire time (optional)::
 
