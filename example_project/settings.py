@@ -16,7 +16,7 @@ ADMINS = (
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'auth_remember.backend.RememberBackend',
+    'auth_remember.backend.AuthRememberBackend',
 )
 
 MANAGERS = ADMINS

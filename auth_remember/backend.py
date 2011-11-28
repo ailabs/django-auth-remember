@@ -7,7 +7,7 @@ from auth_remember import settings
 from auth_remember.models import RememberToken
 
 
-class RememberBackend(object):
+class AuthRememberBackend(object):
     """Custom django authentication backend, used to authenticate via the
     remember-me cookie token
 
