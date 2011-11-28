@@ -32,6 +32,14 @@ This module uses the session var ``REMEMBER_ME_FRESH`` to indicate if the user
 session is fresh. Use the user.is_fresh attribute to test if the user is fresh.
 
 
+More information
+----------------
+
+See:
+ - http://fishbowl.pastiche.org/2004/01/19/persistent_login_cookie_best_practice/
+ - http://stackoverflow.com/questions/549/the-definitive-guide-to-forms-based-website-authentication#477579
+
+
 TODOs
 -----
 
