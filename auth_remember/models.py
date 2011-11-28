@@ -25,6 +25,7 @@ class RememberTokenManager(models.Manager):
         max_age = datetime.now() - timedelta(seconds=settings.COOKIE_AGE)
         return self.filter(created_initial__lte=max_age).delete()
 
+
 class RememberToken(models.Model):
     token_hash = models.CharField(max_length=60, blank=False, primary_key=True)
 
