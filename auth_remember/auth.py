@@ -61,6 +61,12 @@ def create_token_object(user, token=None):
 
 
 def preset_cookie(request, token):
+    """Create the cookie value for the token and save it on the request.
+
+    The middleware will set the actual cookie (via `set_cookie`) on the
+    response.
+
+    """
     if token:
         request._remember_me_token = '%s:%s:%s' % (
             token.serie_token, token.user.id, token.token)

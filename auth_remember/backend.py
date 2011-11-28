@@ -5,8 +5,17 @@ from auth_remember.models import RememberToken
 
 
 class RememberBackend(object):
+    """Custom django authentication backend, used to authenticate via the
+    remember-me cookie token
+
+    """
     def authenticate(self, remember_token, request):
-        # Parse the remember_token string
+        """Return the user associated with the given token.
+
+        If the token is invalid (no valid user found) then delete all
+        tokens associated with the token serie.
+
+        """
         try:
             serie_token, user_id, token = remember_token.split(':')
         except ValueError:
