@@ -90,12 +90,13 @@ class AuthTest(TestCase):
 
     def test_middleware_set_freshness(self):
         from auth_remember.middleware import AuthRememberMiddleware
+        from auth_remember.settings import SESSION_KEY
 
         request = self.factory.get('/')
         request.user = self.user
 
         SessionMiddleware().process_request(request)
-        request.session['REMEMBER_ME_FRESH'] = True
+        request.session[SESSION_KEY] = True
 
         AuthRememberMiddleware().process_request(request)
         self.assertEqual(request.user, self.user)

@@ -3,13 +3,13 @@ from django.contrib.auth import signals
 from django.dispatch import receiver
 
 from auth_remember import utils
-from auth_remember.settings import COOKIE_NAME
+from auth_remember.settings import COOKIE_NAME, SESSION_KEY
 
 
 class AuthRememberMiddleware(object):
     def process_request(self, request):
         if request.user.is_authenticated():
-            request.user.is_fresh = request.session.get('REMEMBER_ME_FRESH', False)
+            request.user.is_fresh = request.session.get(SESSION_KEY, False)
             return
 
         request.user.is_fresh = False
@@ -38,7 +38,7 @@ def set_user_is_fresh(sender, **kwargs):
     request = kwargs['request']
     user = kwargs['user']
     user.is_fresh = not getattr(user, '_remember_me_user', False)
-    request.session['REMEMBER_ME_FRESH'] = user.is_fresh
+    request.session[SESSION_KEY] = user.is_fresh
 
 
 @receiver(signals.user_logged_out)
