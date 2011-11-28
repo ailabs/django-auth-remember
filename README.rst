@@ -36,8 +36,17 @@ To remember a user add the following code to your authentication handler::
     from auth_remember import remember_user
     remember_user(request, user)
 
-This module uses the session var ``REMEMBER_ME_FRESH`` to indicate if the user
-session is fresh. Use the user.is_fresh attribute to test if the user is fresh.
+Use the user.is_fresh attribute to test if the user is fresh.
+
+    {% if user.is_fresh %}
+        This user session is fresh
+    {% else %}
+        This user session is NOT fresh
+    {% endif %}
+
+Under the hood auth_remember uses the session var ``AUTH_REMEMBER_FRESH`` to
+indicate if the user session is fresh. The name of the session var can be
+changed by setting the ``SESSION_KEY`` in you're settings file.
 
 
 More information
@@ -51,4 +60,4 @@ See:
 TODOs
 -----
 
-- Introduce settings for AUTH_REMEMBER_COOKIE_DOMAIN 
+- Introduce settings for AUTH_REMEMBER_COOKIE_DOMAIN
