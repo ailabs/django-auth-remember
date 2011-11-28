@@ -1,7 +1,7 @@
 Django auth remember app
 ========================
 
-Add the auth_remember authentication backend to django:
+Add the auth_remember authentication backend to django::
 
     AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
@@ -9,7 +9,7 @@ Add the auth_remember authentication backend to django:
     )
 
 Add the remember middleware in your settings, right after
-AuthenticationMiddleware:
+AuthenticationMiddleware::
 
     MIDDLEWARE_CLASSES = (
         ...
