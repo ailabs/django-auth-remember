@@ -2,7 +2,7 @@ from django.contrib import auth
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
-from auth_remember.auth import remember_user
+from auth_remember import remember_user
 
 from example_project.auth_example.forms import LoginForm
 

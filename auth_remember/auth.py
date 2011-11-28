@@ -6,8 +6,9 @@ from django.conf import settings
 from django.contrib import auth as django_auth
 from django.utils.http import cookie_date
 
-from auth_remember.settings import COOKIE_AGE, COOKIE_NAME
+from auth_remember.auth_utils import make_password
 from auth_remember.models import RememberToken
+from auth_remember.settings import COOKIE_AGE, COOKIE_NAME
 
 
 def login(request):
@@ -24,52 +25,31 @@ def login(request):
         django_auth.login(request, user)
 
 
-def remember_user(request, user):
-    """Set the remember-me flag on the user.
-
-    A token is automatically generated and stored in the user's session.
-    This token is set as a cookie value by the middleware.
+def create_token_string(user, token=None):
+    """Create a new token object for the given `user` and return the
+    token string.
 
     """
-    token = create_token_object(user, None)
-    preset_cookie(request, token)
-
-
-def create_token_object(user, token=None):
-    """Create a new token object for the given `user` and optionally based
-    upon the given `token`.
-
-    If the optional token is given then a new token is created for the
-    same serie.
-
-    """
-    if token:
-        serie_created = token.serie_created
-        serie_token = token.serie_token
-    else:
-        serie_created = datetime.now()
-        serie_token = uuid.uuid4().hex
-
+    token_value = uuid.uuid4().hex
+    token_hash = make_password('sha1', token_value)
     token = RememberToken(
-        token=uuid.uuid4().hex,
-        serie_created=serie_created,
-        serie_token=serie_token,
+        token_hash=token_hash,
+        created_initial=token.created_initial if token else datetime.now(),
         user=user
     )
     token.save()
-    return token
+    return '%d:%s' % (user.id, token_value)
 
 
-def preset_cookie(request, token):
+def preset_cookie(request, token_string):
     """Create the cookie value for the token and save it on the request.
 
     The middleware will set the actual cookie (via `set_cookie`) on the
     response.
 
     """
-    if token:
-        request._remember_me_token = '%s:%s:%s' % (
-            token.serie_token, token.user.id, token.token)
+    if token_string:
+        request._remember_me_token = token_string
     else:
         request._remember_me_token = ''
 
