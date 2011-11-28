@@ -18,7 +18,13 @@ AuthenticationMiddleware::
         ...
     )
 
-Add auth_remember to INSTALLED_APPS
+
+Add auth_remember to INSTALLED_APPS::
+
+    INSTALLED_APPS = (
+        'auth_remember',
+    )
+
 
 Set the cookie name and expire time (optional)::
 
@@ -35,6 +41,7 @@ To remember a user add the following code to your authentication handler::
 
     from auth_remember import remember_user
     remember_user(request, user)
+
 
 Use the user.is_fresh attribute to test if the user is fresh.
 
