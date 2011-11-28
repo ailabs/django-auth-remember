@@ -29,7 +29,7 @@ To remember a user add the following code to your authentication handler::
     remember_user(request, user)
 
 This module uses the session var ``REMEMBER_ME_FRESH`` to indicate if the user
-session is fresh.
+session is fresh. Use the user.is_fresh attribute to test if the user is fresh.
 
 
 TODOs
