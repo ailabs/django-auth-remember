@@ -53,7 +53,7 @@ Use the user.is_fresh attribute to test if the user is fresh::
 
 Under the hood auth_remember uses the session var ``AUTH_REMEMBER_FRESH`` to
 indicate if the user session is fresh. The name of the session var can be
-changed by setting the ``SESSION_KEY`` in you're settings file.
+changed by setting the ``AUTH_REMEMBER_SESSION_KEY`` in you're settings file.
 
 
 More information
