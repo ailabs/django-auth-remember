@@ -43,7 +43,7 @@ To remember a user add the following code to your authentication handler::
     remember_user(request, user)
 
 
-Use the user.is_fresh attribute to test if the user is fresh.
+Use the user.is_fresh attribute to test if the user is fresh::
 
     {% if user.is_fresh %}
         This user session is fresh
