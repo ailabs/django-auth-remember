@@ -43,16 +43,20 @@ class RunTests(Command):
         pass
 
 
+readme = []
+with open('README.rst', 'r') as fh:
+    readme = fh.readlines()
+
 
 setup(
     name='django-auth-remember',
-    version='0.1',
-    url='',
+    version='0.2',
+    url='https://github.com/ailabs/django-auth-remember/',
     license='MIT',
     author='Michael van Tellingen',
     author_email='m.vantellingen@auto-interactive.nl',
-    description='Django rememberme app',
-    long_description=__doc__,
+    description='Django app for remember-me functionality (using a token)',
+    long_description=''.join(readme),
     install_requires=install_requires,
     zip_safe=False,
     cmdclass={"test": RunTests},
