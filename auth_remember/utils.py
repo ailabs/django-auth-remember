@@ -46,12 +46,16 @@ def preset_cookie(request, token_string):
 
 
 def set_cookie(response, token):
-    """Set the cookie with the remember token on the response object."""
-    max_age = datetime.now() + timedelta(seconds=COOKIE_AGE)
-    expires = cookie_date(time.time() + COOKIE_AGE)
+    """Set the cookie with the remember token on the response object.
+
+    The max_age value will be auto-calculated based on the datetime set via
+    expires.
+
+    """
+    expires = datetime.utcnow() + timedelta(seconds=COOKIE_AGE)
 
     response.set_cookie(COOKIE_NAME, token,
-        max_age=max_age, expires=expires,
+        max_age=None, expires=expires,
         domain=settings.SESSION_COOKIE_DOMAIN,
         path=settings.SESSION_COOKIE_PATH,
         secure=settings.SESSION_COOKIE_SECURE or None,
