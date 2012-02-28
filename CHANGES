@@ -1,0 +1,4 @@
+0.3:
+* Fix a bug in the max_age cookie setting
+* Fix packaging
+
