@@ -1,0 +1,4 @@
+include setup.py MANIFEST.in README.rst requirements.pip
+recursive-include auth_remember/templates *
+prune tests
+prune example_project
