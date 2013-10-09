@@ -56,6 +56,19 @@ indicate if the user session is fresh. The name of the session var can be
 changed by setting the ``AUTH_REMEMBER_SESSION_KEY`` in you're settings file.
 
 
+If You Have a Custom User Model
+-------------------------------
+
+From Django 1.5  on wards it is possible to swap a different model in for the
+usual auth.user. In this case the migrations included in this module will not
+work, since they refer to the default user model. One workaround for this
+problem is to copy the ``auth_remember`` directory in to you project and
+either delete the ``migrations`` subdirectory (forcing it to rely on
+old-fashioned ``syncdb``), or update the migration with this command::
+
+    ./manage.py schemamigration auth_remember --update --initial
+
+
 More information
 ----------------
 
