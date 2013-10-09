@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from auth_remember import utils
 from auth_remember.models import RememberToken
@@ -26,6 +26,6 @@ class AuthRememberBackend(object):
 
     def get_user(self, user_id):
         try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
+            return get_user_model().objects.get(pk=user_id)
+        except get_user_model().DoesNotExist:
             return None

@@ -1,17 +1,19 @@
 import time
 
 from django.contrib import auth
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import  AnonymousUser
+from django.contrib.auth import get_user_model
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
 
 
+
 class TokenCreationTest(TestCase):
     def setUp(self):
-        self.user = User(username='test_user')
-        self.user.save()
+        junk_params = dict((x, x.upper()) for x in get_user_model().REQUIRED_FIELDS)
+        self.user = get_user_model().objects.create_user('TEST_USER', password='PASSWORD', **junk_params)
 
     def test_create_token_string(self):
         from auth_remember.utils import create_token_string
@@ -44,9 +46,8 @@ class TokenCreationTest(TestCase):
 
 class AuthTest(TestCase):
     def setUp(self):
-        self.user = User(username='test_user')
-        self.user.set_password('secret')
-        self.user.save()
+        junk_params = dict((x, x.upper()) for x in get_user_model().REQUIRED_FIELDS)
+        self.user = get_user_model().objects.create_user('test_user', password='secret', **junk_params)
         self.factory = RequestFactory()
 
     def test_auth_backend(self):

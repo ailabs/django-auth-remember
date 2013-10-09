@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.db import models
 from django.utils import timezone
@@ -17,13 +17,13 @@ class RememberTokenManager(models.Manager):
         except ValueError:
             return
 
-        max_age = datetime.now() - timedelta(seconds=settings.COOKIE_AGE)
+        max_age = timezone.now() - timedelta(seconds=settings.COOKIE_AGE)
         for token in self.filter(created_initial__gte=max_age, user=user_id):
             if check_password(token_hash, token.token_hash):
                 return token
 
     def clean_remember_tokens(self):
-        max_age = datetime.now() - timedelta(seconds=settings.COOKIE_AGE)
+        max_age = timezone.now() - timedelta(seconds=settings.COOKIE_AGE)
         return self.filter(created_initial__lte=max_age).delete()
 
 
