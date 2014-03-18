@@ -5,7 +5,7 @@ from setuptools import setup, find_packages, Command
 
 
 install_requires = [
-    'Django>=1.3',
+    'Django>=1.5',
 ]
 
 
@@ -50,7 +50,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='django-auth-remember',
-    version='0.3',
+    version='0.3.1',
     url='https://github.com/ailabs/django-auth-remember/',
     license='MIT',
     author='Michael van Tellingen',
