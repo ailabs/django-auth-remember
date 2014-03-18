@@ -1,6 +1,9 @@
 Django auth remember app
 ========================
 
+.. image:: https://api.travis-ci.org/ailabs/django-auth-remember.png?branch=master
+   :target: https://api.travis-ci.org/ailabs/django-auth-remember
+
 Add the auth_remember authentication backend to django::
 
     AUTHENTICATION_BACKENDS = (
