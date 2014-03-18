@@ -11,6 +11,6 @@ env:
 
 install:
   - pip install Django==$DJANGO
-  - python setup.py install
+  - python setup.py develop
 
 script: python setup.py test
