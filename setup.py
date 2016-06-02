@@ -5,7 +5,7 @@ from setuptools import setup, find_packages, Command
 
 
 install_requires = [
-    'Django >= 1.4.1',
+    'Django >= 1.9.1',
     'South >= 0.8.4',
 ]
 
@@ -26,8 +26,7 @@ class RunTests(Command):
         os.chdir(testproj_dir)
         sys.path.append(testproj_dir)
         from django.core.management import execute_from_command_line
-        os.environ["DJANGO_SETTINGS_MODULE"] = os.environ.get(
-                        "DJANGO_SETTINGS_MODULE", "settings")
+        os.environ["DJANGO_SETTINGS_MODULE"] = os.environ.get("DJANGO_SETTINGS_MODULE", "settings")
         settings_file = os.environ["DJANGO_SETTINGS_MODULE"]
         prev_argv = list(sys.argv)
         try:
@@ -50,7 +49,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='django-auth-remember',
-    version='0.3',
+    version='0.4',
     url='https://github.com/ailabs/django-auth-remember/',
     license='MIT',
     author='Michael van Tellingen',
