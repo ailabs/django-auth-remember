@@ -7,6 +7,14 @@ from auth_remember.settings import COOKIE_NAME, SESSION_KEY
 
 
 class AuthRememberMiddleware(object):
+    def __init__(self, get_response=None):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        self.process_request(request)
+        response = self.get_response(request)
+        return self.process_response(request, response)
+
     def process_request(self, request):
         if request.user.is_authenticated():
             request.user.is_fresh = request.session.get(SESSION_KEY, False)

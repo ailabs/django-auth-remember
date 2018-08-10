@@ -131,7 +131,7 @@ class AuthTest(TestCase):
         self.assertTrue(RememberToken.objects.get_by_string(token_string))
 
     def test_middleware_set_remember_token(self):
-        from auth_remember import remember_user
+        from auth_remember.core import remember_user
         from auth_remember import settings
         from auth_remember.middleware import AuthRememberMiddleware
 
