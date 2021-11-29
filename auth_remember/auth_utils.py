@@ -1,6 +1,6 @@
 """Taken from django-dev (should be standard in django 1.4)"""
 import hashlib
-from django.utils.encoding import smart_str
+from django.utils.encoding import smart_bytes
 from django.utils.crypto import constant_time_compare
 
 UNUSABLE_PASSWORD = '!' # This will never be a valid hash
@@ -10,7 +10,7 @@ def get_hexdigest(algorithm, salt, raw_password):
     Returns a string of the hexdigest of the given plaintext password and salt
     using the given algorithm ('md5', 'sha1' or 'crypt').
     """
-    raw_password, salt = smart_str(raw_password), smart_str(salt)
+    raw_password, salt = smart_bytes(raw_password), smart_bytes(salt)
     if algorithm == 'crypt':
         try:
             import crypt
