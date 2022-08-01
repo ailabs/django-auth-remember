@@ -48,7 +48,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='django-auth-remember',
-    version='0.6',
+    version='0.7',
     url='https://github.com/ailabs/django-auth-remember/',
     license='MIT',
     author='Michael van Tellingen',
