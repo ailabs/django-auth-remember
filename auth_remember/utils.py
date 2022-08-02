@@ -1,9 +1,7 @@
-import time
 import uuid
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.utils.http import cookie_date
 
 from auth_remember.auth_utils import make_password
 from auth_remember.models import RememberToken
