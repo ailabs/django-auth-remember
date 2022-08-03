@@ -16,7 +16,7 @@ class AuthRememberMiddleware(object):
         return self.process_response(request, response)
 
     def process_request(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             request.user.is_fresh = request.session.get(SESSION_KEY, False)
             return
 
